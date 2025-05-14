@@ -74,7 +74,7 @@ switch ($action) {
             require_once __DIR__ . '/../views/home.php';
         } else {
             // El usuario no está autenticado; redirigimos a login.php (donde se muestra solo el formulario de login).
-            header("Location: login.php");
+            header("Location: index.php?action=login");
             exit;
         }
         break;

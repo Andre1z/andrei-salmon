@@ -20,9 +20,9 @@ if (session_status() == PHP_SESSION_NONE) {
         <h1>andrei | salmon</h1>
         <nav>
             <ul>
-                <li><a href="index.php">Inicio</a></li>
-                <li><a href="profile.php">Mi perfil</a></li>        
-                <li><a href="?action=logout">Cerrar sesión</a></li>
+                <li><a href="../public/index.php">Inicio</a></li>
+                <li><a href="../views/profile.php">Mi perfil</a></li>        
+                <li><a href="../public/logout.php">Cerrar sesión</a></li>
             </ul>
         </nav>
         <div class="user-info">
