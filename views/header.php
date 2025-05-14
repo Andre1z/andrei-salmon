@@ -1,7 +1,6 @@
 <?php
 // views/header.php
 
-// Asegúrate de haber iniciado la sesión y cargado los helpers necesarios (por ejemplo, la función escape())
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -12,33 +11,30 @@ if (session_status() == PHP_SESSION_NONE) {
     <meta charset="UTF-8">
     <title>andrei | salmon</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Enlace al stylesheet ubicado en public/assets/css/styles.css -->
     <link rel="stylesheet" href="assets/css/styles.css">
-    <!-- Enlace al favicon (asegúrate de que la ruta corresponda al archivo correcto) -->
     <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
 </head>
 <body>
 <header>
     <div class="header-container">
-        <h1>Andrei | salmon</h1>
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <nav>
-                <ul>
-                    <li><a href="index.php">Inicio</a></li>
-                    <li><a href="?action=profile">Mi perfil</a></li>        
-                    <li><a href="?action=logout">Cerrar sesión</a></li>
-                </ul>
-            </nav>
-            <div class="user-info">
-                <span>¡Hola, <?= escape($user['username'] ?? 'Usuario') ?>!</span>
-            </div>
-        <?php else: ?>
-            <nav>
-                <ul>
-                    <li><a href="index.php?action=login">Iniciar sesión</a></li>
-                    <li><a href="index.php?action=signup">Regístrate</a></li>
-                </ul>
-            </nav>
-        <?php endif; ?>
+        <h1>andrei | salmon</h1>
+        <nav>
+            <ul>
+                <li><a href="index.php">Inicio</a></li>
+                <li><a href="profile.php">Mi perfil</a></li>        
+                <li><a href="?action=logout">Cerrar sesión</a></li>
+            </ul>
+        </nav>
+        <div class="user-info">
+            <?php
+            // Si la variable $user ya está definida, se muestra el nombre; de lo contrario se consulta via sesión
+            if (isset($user) && isset($user['username'])) {
+                echo "¡Hola, " . escape($user['username']) . "!";
+            } else {
+                // Alternativamente, si se guardara el username en la sesión, se podría hacer:
+                echo "¡Hola, Usuario!";
+            }
+            ?>
+        </div>
     </div>
 </header>
