@@ -1,0 +1,253 @@
+/* Reset global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Variables de color y tipografía */
+:root {
+    --primary-color: #3498db;    /* Azul eléctrico */
+    --primary-dark:  #2980b9;     /* Azul oscuro */
+    --accent-color:  #8e44ad;     /* Púrpura amethyst */
+    --bg-color:      #ecf0f1;     /* Fondo gris clarito */
+    --text-color:    #2c3e50;     /* Gris azulado oscuro */
+    --divider-color: #bdc3c7;
+    --error-color:   #e74c3c;     /* Rojo vibrante para errores */
+    --font-family:   'Roboto', sans-serif;
+}
+
+/* Base global */
+body {
+    font-family: var(--font-family);
+    font-size: 16px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background-color: var(--primary-color);
+    padding: 20px 0;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 2rem;
+    color: #fff;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease-in-out;
+}
+
+header nav ul li a:hover {
+    color: var(--accent-color);
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary-dark);
+    padding: 15px 0;
+    text-align: center;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+/* Contenedores generales */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Formularios */
+form {
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--divider-color);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+/* Botones */
+.btn {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Mensajes de error */
+.error {
+    color: var(--error-color);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Vistas de Login y Signup */
+.login-container,
+.signup-container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border: 1px solid var(--divider-color);
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2,
+.signup-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Contenedor de formularios internos */
+.forms-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.separator {
+    border: none;
+    border-top: 1px solid var(--divider-color);
+    margin: 20px 0;
+}
+
+/* Layout principal para Home usando CSS Grid */
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+/* Paneles laterales y central */
+.pane {
+    background: #fff;
+    border: 1px solid var(--divider-color);
+    border-radius: 6px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.pane ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.pane ul li {
+    margin-bottom: 10px;
+}
+
+/* Publicaciones */
+.post {
+    border-bottom: 1px solid var(--divider-color);
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.post:last-child {
+    border-bottom: none;
+}
+
+.post img {
+    width: 100%;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+/* Comentarios */
+.comments {
+    margin-top: 10px;
+    padding-left: 15px;
+}
+
+.comments div {
+    margin-bottom: 10px;
+}
+
+.comments strong {
+    color: var(--accent-color);
+}
+
+/* Mensajes en el panel de mensajería */
+.message {
+    border-bottom: 1px solid var(--divider-color);
+    padding: 10px 0;
+}
+
+.message:last-child {
+    border-bottom: none;
+}
+
+/* Enlaces */
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--accent-color);
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    main {
+        grid-template-columns: 1fr;
+    }
+}
