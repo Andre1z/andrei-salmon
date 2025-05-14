@@ -27,6 +27,11 @@ include_once __DIR__ . '/header.php';
             <button type="submit" class="btn">Iniciar sesión</button>
         </form>
     </div>
+    
+    <!-- Enlace para dirigir al usuario a la página de registro -->
+    <div class="redirect-link">
+        <p>¿No tienes cuenta? <a href="index.php?action=signup">Regístrate</a></p>
+    </div>
 </div>
 
 <?php

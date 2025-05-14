@@ -13,7 +13,7 @@ $dbConnection = (new Database())->getConnection();
 // Detectamos la acción a realizar (vía GET o POST)
 $action = $_GET['action'] ?? ($_POST['action'] ?? '');
 
-// Enrutamiento simple: según el valor de "action", delegamos en el controlador correspondiente.
+// Enrutamiento simple: según el valor de "action" se delega la ejecución al controlador correspondiente.
 switch ($action) {
     case 'login':
         require_once __DIR__ . '/../src/Controllers/AuthController.php';
@@ -64,31 +64,30 @@ switch ($action) {
         break;
         
     case 'profile':
-        // Nueva ruta para la vista de perfil.
-        // Verifica que el usuario esté autenticado.
+        // Verificamos que el usuario esté autenticado
         if (!isset($_SESSION['user_id'])) {
-            header("Location: login.php");
+            header("Location: index.php?action=login");
             exit;
         }
+        // Cargamos la información del usuario para la vista de perfil
         require_once __DIR__ . '/../src/Models/User.php';
         $userModel = new User($dbConnection);
         $user = $userModel->findById($_SESSION['user_id']);
-        // Cargar la vista de perfil.
         require_once __DIR__ . '/../views/profile.php';
         break;
         
     default:
         // Si no se especifica ninguna acción:
         if (isset($_SESSION['user_id'])) {
-            // Obtenemos la información del usuario para el header.
+            // Obtenemos la información del usuario para el header
             require_once __DIR__ . '/../src/Models/User.php';
             $userModel = new User($dbConnection);
             $user = $userModel->findById($_SESSION['user_id']);
-            // Cargar la vista principal (feed de publicaciones).
+            // Cargamos la vista principal (feed de publicaciones)
             require_once __DIR__ . '/../views/home.php';
         } else {
-            // El usuario no está autenticado; redirigimos a login.php.
-            header("Location: login.php");
+            // El usuario no está autenticado: redirigimos a index.php?action=login
+            header("Location: index.php?action=login");
             exit;
         }
         break;
