@@ -1,6 +1,11 @@
 <?php
 // views/header.php
 
+// Si la función escape() no existe, incluimos el archivo de utilidades.
+if (!function_exists('escape')) {
+    require_once __DIR__ . '/../src/Helpers/Utils.php';
+}
+
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -11,7 +16,9 @@ if (session_status() == PHP_SESSION_NONE) {
     <meta charset="UTF-8">
     <title>andrei | salmon</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Enlace a la hoja de estilos -->
     <link rel="stylesheet" href="assets/css/styles.css">
+    <!-- Enlace al favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
 </head>
 <body>
@@ -20,18 +27,17 @@ if (session_status() == PHP_SESSION_NONE) {
         <h1>andrei | salmon</h1>
         <nav>
             <ul>
-                <li><a href="../public/index.php">Inicio</a></li>
-                <li><a href="../views/profile.php">Mi perfil</a></li>        
-                <li><a href="../public/logout.php">Cerrar sesión</a></li>
+                <li><a href="index.php">Inicio</a></li>
+                <li><a href="profile.php">Mi perfil</a></li>
+                <li><a href="?action=logout">Cerrar sesión</a></li>
             </ul>
         </nav>
         <div class="user-info">
             <?php
-            // Si la variable $user ya está definida, se muestra el nombre; de lo contrario se consulta via sesión
+            // Se muestra el nombre del usuario si la variable $user ya está definida.
             if (isset($user) && isset($user['username'])) {
                 echo "¡Hola, " . escape($user['username']) . "!";
             } else {
-                // Alternativamente, si se guardara el username en la sesión, se podría hacer:
                 echo "¡Hola, Usuario!";
             }
             ?>

@@ -1,8 +1,8 @@
 <?php
 // views/profile.php
-include_once __DIR__ . '/header.php';
 
-// Verificar que el usuario esté autenticado
+// Iniciar sesión y cargar la configuración inicial
+session_start();
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
@@ -14,6 +14,9 @@ $db = (new Database())->getConnection();
 require_once __DIR__ . '/../src/Models/User.php';
 $userModel = new User($db);
 $user = $userModel->findById($_SESSION['user_id']);
+
+// Ahora que ya tenemos $user, incluimos el header para que la sección de .user-info muestre correctamente el nombre
+include_once __DIR__ . '/header.php';
 
 $message = '';
 
@@ -37,6 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $message = "El nombre de usuario no puede estar vacío.";
         }
     }
+    
     // Actualizar contraseña
     if (isset($_POST['action']) && $_POST['action'] === 'update_password') {
         $old_password = $_POST['old_password'] ?? '';
