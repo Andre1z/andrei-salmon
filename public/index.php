@@ -10,7 +10,7 @@ require_once __DIR__ . '/../src/Helpers/Utils.php';
 // Se crea la conexión a la base de datos.
 $dbConnection = (new Database())->getConnection();
 
-// Detectamos la acción a realizar (a través de GET o POST)
+// Detectamos la acción a realizar (vía GET o POST)
 $action = $_GET['action'] ?? ($_POST['action'] ?? '');
 
 // Enrutamiento simple: según el valor de "action", delegamos en el controlador correspondiente.
@@ -63,18 +63,32 @@ switch ($action) {
         $messageController->sendMessage();
         break;
         
+    case 'profile':
+        // Nueva ruta para la vista de perfil.
+        // Verifica que el usuario esté autenticado.
+        if (!isset($_SESSION['user_id'])) {
+            header("Location: login.php");
+            exit;
+        }
+        require_once __DIR__ . '/../src/Models/User.php';
+        $userModel = new User($dbConnection);
+        $user = $userModel->findById($_SESSION['user_id']);
+        // Cargar la vista de perfil.
+        require_once __DIR__ . '/../views/profile.php';
+        break;
+        
     default:
         // Si no se especifica ninguna acción:
         if (isset($_SESSION['user_id'])) {
-            // El usuario está autenticado, obtenemos su información para el header...
+            // Obtenemos la información del usuario para el header.
             require_once __DIR__ . '/../src/Models/User.php';
             $userModel = new User($dbConnection);
             $user = $userModel->findById($_SESSION['user_id']);
-            // ...y se carga la vista principal (feed de publicaciones)
+            // Cargar la vista principal (feed de publicaciones).
             require_once __DIR__ . '/../views/home.php';
         } else {
-            // El usuario no está autenticado; redirigimos a login.php (donde se muestra solo el formulario de login).
-            header("Location: index.php?action=login");
+            // El usuario no está autenticado; redirigimos a login.php.
+            header("Location: login.php");
             exit;
         }
         break;

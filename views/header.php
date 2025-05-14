@@ -28,10 +28,12 @@ if (session_status() == PHP_SESSION_NONE) {
         <nav>
             <ul>
                 <li><a href="index.php">Inicio</a></li>
-                <li><a href="profile.php">Mi perfil</a></li>
+        <!-- Cambiamos el enlace para que use el parámetro action -->
+                <li><a href="index.php?action=profile">Mi perfil</a></li>
                 <li><a href="?action=logout">Cerrar sesión</a></li>
             </ul>
         </nav>
+
         <div class="user-info">
             <?php
             // Se muestra el nombre del usuario si la variable $user ya está definida.
