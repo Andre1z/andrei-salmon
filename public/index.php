@@ -3,20 +3,17 @@
 
 session_start();
 
-// Cargar la configuración de la base de datos.
+// Cargar la configuración de la base de datos y los helpers
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../src/Helpers/Utils.php';
 
 // Se crea la conexión a la base de datos.
 $dbConnection = (new Database())->getConnection();
 
-/**
- * Detectamos la acción a realizar:
- * Puede venir vía GET o POST (por ejemplo, 'login', 'signup', 'logout', 'post', etc.)
- */
+// Detectamos la acción a realizar (a través de GET o POST)
 $action = $_GET['action'] ?? ($_POST['action'] ?? '');
 
-// Enrutamiento simple: según el valor de "action" se delega la ejecución al controlador correspondiente.
+// Enrutamiento simple: según el valor de "action", delegamos en el controlador correspondiente.
 switch ($action) {
     case 'login':
         require_once __DIR__ . '/../src/Controllers/AuthController.php';
@@ -67,13 +64,18 @@ switch ($action) {
         break;
         
     default:
-        // Si no se especifica ninguna acción, comprobamos si el usuario ha iniciado sesión.
+        // Si no se especifica ninguna acción:
         if (isset($_SESSION['user_id'])) {
-            // Cargar la vista principal (feed de publicaciones).
+            // El usuario está autenticado, obtenemos su información para el header...
+            require_once __DIR__ . '/../src/Models/User.php';
+            $userModel = new User($dbConnection);
+            $user = $userModel->findById($_SESSION['user_id']);
+            // ...y se carga la vista principal (feed de publicaciones)
             require_once __DIR__ . '/../views/home.php';
         } else {
-            // Si el usuario no está autenticado, mostrar la vista de login (o combinar login y signup).
-            require_once __DIR__ . '/../views/login.php';
+            // El usuario no está autenticado; redirigimos a login.php (donde se muestra solo el formulario de login).
+            header("Location: login.php");
+            exit;
         }
         break;
 }
